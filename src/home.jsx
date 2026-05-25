@@ -4,12 +4,13 @@ import "./home.css";
 function Home() {
   const currentUser = JSON.parse(localStorage.getItem("loggedInUser")) || null;
 
-  // 🔥 Agar user loggedInUser nahi hai toh pehle hi login par bhej do
-  useEffect(() => {
-    if (!currentUser) {
-      window.location.href = "/login";
-    }
-  }, [currentUser]);
+  const navigate = useNavigate();
+
+useEffect(() => {
+  if (!currentUser) {
+    navigate("/login");
+  }
+}, [currentUser, navigate]);
 
   const [formData, setFormData] = useState({
     firstName: "", lastName: "", email: "", bio: "", image: "", gender: "", age: "", address: "", contact: "",
