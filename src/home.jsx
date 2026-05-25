@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./home.css";
 
 function Home() {
   const currentUser = JSON.parse(localStorage.getItem("loggedInUser")) || null;
-
   const navigate = useNavigate();
 
-useEffect(() => {
-  if (!currentUser) {
-    navigate("/login");
-  }
-}, [currentUser, navigate]);
+  useEffect(() => {
+    if (!currentUser) {
+      navigate("/login");
+    }
+  }, [currentUser, navigate]);
 
   const [formData, setFormData] = useState({
     firstName: "", lastName: "", email: "", bio: "", image: "", gender: "", age: "", address: "", contact: "",
@@ -64,25 +64,21 @@ useEffect(() => {
     setEditId(c.id);
   };
 
-  // 🔥 Logout Fix
   const handleLogout = () => {
     localStorage.removeItem("loggedInUser");
-    window.location.href = "/login";
+    navigate("/login");
   };
 
-  if (!currentUser) return null; // Jab tak check ho rha hai screen blank rakhein
+  if (!currentUser) return null;
 
-  return (<div className="dashboard-container">
-      {/* Top Bar for Logout */}
+  return (
+    <div className="dashboard-container">
       <div className="dashboard-top-bar">
         <div className="dashboard-logo">Dashboard</div>
         <button className="logout-btn" onClick={handleLogout}>Logout</button>
       </div>
 
-      {/* Main Content: Form + Cards Grid */}
       <div className="dashboard-content">
-        
-        {/* Contact Form */}
         <form className="contact-form" onSubmit={handleSubmit}>
           <h2>Contact Management</h2>
           
@@ -116,7 +112,6 @@ useEffect(() => {
           </button>
         </form>
 
-        {/* Contacts Cards Display Grid */}
         <div className="contacts-grid">
           {contacts.map((c) => (
             <div className="contact-card" key={c.id}>
@@ -137,7 +132,6 @@ useEffect(() => {
             </div>
           ))}
         </div>
-
       </div>
     </div>
   );

@@ -1,14 +1,16 @@
-import { useState , useEffect} from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom"; 
 import "./login.css";
 
 function Login() {
+  const navigate = useNavigate(); 
+
   useEffect(() => {
     const user = localStorage.getItem("loggedInUser");
     if (user) {
-      window.location.href = "/home";
+      navigate("/home"); 
     }
-  }, []);
+  }, [navigate]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +19,6 @@ function Login() {
     e.preventDefault();
     const users = JSON.parse(localStorage.getItem("users")) || [];
 
-    // User check karein
     const user = users.find(
       (u) => u.email.toLowerCase() === email.toLowerCase() && u.password === password
     );
@@ -26,11 +27,10 @@ function Login() {
       localStorage.setItem("loggedInUser", JSON.stringify(user));
       alert("Login Successful!");
       
-       navigate("/home");
+      navigate("/home"); 
     } else {
       alert("Invalid Email or Password!");
     } 
-
   };
 
   return (
@@ -65,7 +65,5 @@ function Login() {
     </div>
   );
 }
- 
 
-
-export default Login; 
+export default Login;
