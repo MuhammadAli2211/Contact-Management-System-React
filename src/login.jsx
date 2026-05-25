@@ -23,15 +23,14 @@ function Login() {
     );
 
     if (user) {
-      // 1. Data save karein
       localStorage.setItem("loggedInUser", JSON.stringify(user));
       alert("Login Successful!");
       
-      // 2. 🔥 Force Navigate (Yeh page ko refresh karke /home pe bhej dega)
-      window.location.href = "/home";
+       navigate("/home");
     } else {
       alert("Invalid Email or Password!");
-    }
+    } 
+
   };
 
   return (
